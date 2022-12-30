@@ -1,36 +1,36 @@
-main {
-  padding: 0 !important;
-}
-
-header {
-  display: flex;
-  justify-content: space-evenly;
-}
-
 button {
   position: relative;
   z-index: 3;
-  border: 10px solid blue;
+}
+
+main {
+  border: 10px solid green;
+}
+
+.svg-container {
+  border: 10px solid gold;
+  display: flex;
+  flex: 1;
 }
 
 .svg-container svg {
   grid-row: body;
 }
 
+svg{
+  opacity: 0.5;
+}
+
 .grid {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
   background-size: 40px 40px;
   background-image:
     linear-gradient(to right, #ffffff 1px, transparent 1px),
     linear-gradient(to bottom, #ffffff 1px, transparent 1px);
+  z-index: 3;
+  overflow: hidden;
 }
 
 .grid > div {
-  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
