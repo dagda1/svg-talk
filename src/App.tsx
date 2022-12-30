@@ -7,6 +7,9 @@ import { useParentSize } from '@cutting/use-get-parent-size';
 import { GridRows, GridColumns } from '@visx/grid';
 import { scaleLinear } from '@visx/scale';
 import cs from 'classnames';
+import { AxisTop, AxisLeft } from '@visx/axis';
+
+const domain = 50;
 
 export function App(): JSX.Element {
   const [showViewport, setViewport] = useToggle();
@@ -19,30 +22,33 @@ export function App(): JSX.Element {
 
   const adjustedHeight = Math.ceil(width / aspect);
 
+  const viewBoxWidth = width;
+  const viewBoxHeight = height;
+
   console.dir({ width, height, adjustedHeight, aspect });
 
   const svgXscale = scaleLinear({
-    domain: [0, 10],
+    domain: [0, domain],
     range: [0, width],
-    round: true,
+    nice: false,
   });
 
   const svgYscale = scaleLinear({
-    domain: [0, 10],
-    range: [height, 0],
-    round: true,
+    domain: [0, domain],
+    range: [0, height],
+    nice: false,
   });
 
   const viewboxScale = scaleLinear({
-    domain: [0, 10],
+    domain: [0, domain],
     range: [0, width],
-    round: true,
+    nice: false,
   });
 
   const viewBoxYScale = scaleLinear({
-    domain: [0, 10],
-    range: [height, 0],
-    round: true,
+    domain: [0, domain],
+    range: [0, height],
+    nice: false,
   });
 
   return (
@@ -67,18 +73,32 @@ export function App(): JSX.Element {
         }
       >
         <>
-          <svg style={{ overflow: 'visible' }} height={height} width={width}>
+          <svg style={{ overflow: 'visible' }} viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
             <Rects height={height} width={width} />
             {showSvgViewport && (
               <>
-                <GridRows scale={svgXscale} width={width} height={height} stroke="orange" />
-                <GridColumns scale={svgYscale} width={width} height={height} stroke="orange" />
+                <GridRows scale={svgXscale} width={width} numTicks={domain} height={height} stroke="orange" />
+                <GridColumns scale={svgYscale} width={width} numTicks={domain} height={height} stroke="orange" />
+                <AxisTop scale={svgXscale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
+                <AxisLeft scale={svgXscale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
               </>
             )}
             {showViewbox && (
               <>
-                <GridRows scale={viewboxScale} width={width} height={adjustedHeight} stroke="yellow" />
-                <GridColumns scale={viewBoxYScale} width={width} height={adjustedHeight} stroke="yellow" />
+                <GridRows
+                  scale={viewboxScale}
+                  numTicks={domain}
+                  width={viewBoxWidth}
+                  height={adjustedHeight}
+                  stroke="yellow"
+                />
+                <GridColumns
+                  scale={viewBoxYScale}
+                  width={width}
+                  numTicks={domain}
+                  height={adjustedHeight}
+                  stroke="yellow"
+                />
               </>
             )}
           </svg>

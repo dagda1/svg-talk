@@ -21,6 +21,10 @@ svg{
   opacity: 0.5;
 }
 
+.axis-label {
+  stroke: #ffffff
+}
+
 .grid {
   background-size: 40px 40px;
   background-image:

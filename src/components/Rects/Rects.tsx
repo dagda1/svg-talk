@@ -11,13 +11,14 @@ export function Rects({ width, height }: { width: number; height: number }): JSX
       />
 
       <rect
-        x="50"
-        y="50"
+        x="25"
+        y="25"
         width={width}
         height={height}
         rx="20"
         style={{ fill: '#0000ff', stroke: '#000000', strokeWidth: '2px', fillOpacity: 0.7 }}
       />
+      <circle cx={0} cy={0} r={50} />
     </>
   );
 }
