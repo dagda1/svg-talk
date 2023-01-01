@@ -22,11 +22,15 @@ svg{
 }
 
 .axis-label {
-  stroke: #ffffff
+  stroke: #ffffff;
+}
+
+text {
+  font-size: 50px;
 }
 
 .grid {
-  background-size: 40px 40px;
+  background-size: 120px 120px;
   background-image:
     linear-gradient(to right, #ffffff 1px, transparent 1px),
     linear-gradient(to bottom, #ffffff 1px, transparent 1px);

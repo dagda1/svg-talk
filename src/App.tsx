@@ -9,7 +9,7 @@ import { scaleLinear } from '@visx/scale';
 import cs from 'classnames';
 import { AxisTop, AxisLeft } from '@visx/axis';
 
-const domain = 50;
+const domain = 10;
 
 export function App(): JSX.Element {
   const [showViewport, setViewport] = useToggle();
@@ -39,15 +39,15 @@ export function App(): JSX.Element {
     nice: false,
   });
 
-  const viewboxScale = scaleLinear({
+  const viewboxXScale = scaleLinear({
     domain: [0, domain],
-    range: [0, width],
+    range: [0, viewBoxWidth],
     nice: false,
   });
 
   const viewBoxYScale = scaleLinear({
     domain: [0, domain],
-    range: [0, height],
+    range: [0, viewBoxHeight],
     nice: false,
   });
 
@@ -73,32 +73,38 @@ export function App(): JSX.Element {
         }
       >
         <>
-          <svg style={{ overflow: 'visible' }} viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
+          <svg
+            style={{ overflow: 'visible' }}
+            width={width}
+            height={height}
+            viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+            preserveAspectRatio="xMaxYMid meet"
+          >
             <Rects height={height} width={width} />
             {showSvgViewport && (
               <>
-                <GridRows scale={svgXscale} width={width} numTicks={domain} height={height} stroke="orange" />
-                <GridColumns scale={svgYscale} width={width} numTicks={domain} height={height} stroke="orange" />
-                <AxisTop scale={svgXscale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
-                <AxisLeft scale={svgXscale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
+                <GridRows scale={viewBoxYScale} width={viewBoxWidth} stroke="green" />
+                <GridColumns scale={viewboxXScale} height={viewBoxHeight} stroke="green" />
+                <AxisTop
+                  scale={viewboxXScale}
+                  numTicks={domain}
+                  tickFormat={(d) => `${d}`}
+                  axisClassName="axis-label"
+                />
+                <AxisLeft
+                  scale={viewBoxYScale}
+                  numTicks={domain}
+                  tickFormat={(d) => `${d}`}
+                  axisClassName="axis-label"
+                />
               </>
             )}
             {showViewbox && (
               <>
-                <GridRows
-                  scale={viewboxScale}
-                  numTicks={domain}
-                  width={viewBoxWidth}
-                  height={adjustedHeight}
-                  stroke="yellow"
-                />
-                <GridColumns
-                  scale={viewBoxYScale}
-                  width={width}
-                  numTicks={domain}
-                  height={adjustedHeight}
-                  stroke="yellow"
-                />
+                <GridRows scale={svgYscale} width={width} stroke="orange" />
+                <GridColumns scale={svgXscale} height={height} stroke="orange" />
+                <AxisTop scale={svgXscale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
+                <AxisLeft scale={svgYscale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
               </>
             )}
           </svg>
