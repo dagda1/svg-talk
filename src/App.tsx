@@ -1,13 +1,11 @@
 import './App.css';
 import { ApplicationLayout, Button } from '@cutting/component-library';
-import { Rects } from './components/Rects/Rects';
 import { useToggle } from './hook/useToggle';
 import { useRef } from 'react';
 import { useParentSize } from '@cutting/use-get-parent-size';
-import { GridRows, GridColumns } from '@visx/grid';
 import { scaleLinear } from '@visx/scale';
 import cs from 'classnames';
-import { AxisTop, AxisLeft } from '@visx/axis';
+import { ViewPortGrid } from './components/ViewPortGrid/ViewPortGrid';
 
 const domain = 10;
 
@@ -18,98 +16,50 @@ export function App(): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const { width, height } = useParentSize(containerRef, { debounceDelay: 1000 });
 
-  const aspect = width / height;
-
-  const adjustedHeight = Math.ceil(width / aspect);
-
   const viewBoxWidth = width;
   const viewBoxHeight = height;
 
-  console.dir({ width, height, adjustedHeight, aspect });
-
   const svgXscale = scaleLinear({
     domain: [0, domain],
-    range: [0, width],
-    nice: false,
+    range: [0, Math.min(width, height)],
+    nice: true,
   });
 
   const svgYscale = scaleLinear({
     domain: [0, domain],
-    range: [0, height],
-    nice: false,
+    range: [Math.min(width, height), 0],
+    nice: true,
   });
 
-  const viewboxXScale = scaleLinear({
-    domain: [0, domain],
-    range: [0, viewBoxWidth],
-    nice: false,
-  });
-
-  const viewBoxYScale = scaleLinear({
-    domain: [0, domain],
-    range: [0, viewBoxHeight],
-    nice: false,
-  });
+  console.log(width, height);
 
   return (
     <>
       <ApplicationLayout
         center
-        theme="salesTheme"
+        theme="defaultTheme"
         innerRef={containerRef}
         className={cs({ grid: showViewport })}
         header={
           <>
-            <Button type="button" buttonStyle="secondary" onClick={setViewport}>
+            <Button type="button" buttonStyle="primary" onClick={setViewport}>
               Browser Viewport
             </Button>
-            <Button type="button" buttonStyle="secondary" onClick={setSvgViewport}>
+            <Button type="button" buttonStyle="primary" onClick={setSvgViewport}>
               SVG Viewport
             </Button>
-            <Button type="button" buttonStyle="secondary" onClick={setViewbox}>
+            <Button type="button" buttonStyle="primary" onClick={setViewbox}>
               viewbox
             </Button>
           </>
         }
       >
-        <>
-          <svg
-            style={{ overflow: 'visible' }}
-            width={width}
-            height={height}
-            viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
-            preserveAspectRatio="xMaxYMid meet"
-          >
-            <Rects height={height} width={width} />
-            {showSvgViewport && (
-              <>
-                <GridRows scale={viewBoxYScale} width={viewBoxWidth} stroke="green" />
-                <GridColumns scale={viewboxXScale} height={viewBoxHeight} stroke="green" />
-                <AxisTop
-                  scale={viewboxXScale}
-                  numTicks={domain}
-                  tickFormat={(d) => `${d}`}
-                  axisClassName="axis-label"
-                />
-                <AxisLeft
-                  scale={viewBoxYScale}
-                  numTicks={domain}
-                  tickFormat={(d) => `${d}`}
-                  axisClassName="axis-label"
-                />
-              </>
-            )}
-            {showViewbox && (
-              <>
-                <GridRows scale={svgYscale} width={width} stroke="orange" />
-                <GridColumns scale={svgXscale} height={height} stroke="orange" />
-                <AxisTop scale={svgXscale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
-                <AxisLeft scale={svgYscale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
-              </>
-            )}
-          </svg>
-        </>
+        <svg style={{ overflow: 'visible' }} width={800} height={600}>
+          <ViewPortGrid width={width} height={height} color="#000000" show={showSvgViewport} />
+          <ViewPortGrid width={viewBoxWidth} height={viewBoxHeight} color="orange" show={showViewbox} />
+        </svg>
       </ApplicationLayout>
+      <div className={cs('bottom', { grid: showViewport })}></div>
     </>
   );
 }

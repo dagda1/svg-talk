@@ -3,39 +3,33 @@ button {
   z-index: 3;
 }
 
-main {
-  border: 10px solid green;
-}
-
-.svg-container {
-  border: 10px solid gold;
-  display: flex;
-  flex: 1;
-}
-
-.svg-container svg {
-  grid-row: body;
-}
-
-svg{
-  opacity: 0.5;
-}
-
 .axis-label {
-  stroke: #ffffff;
+  stroke: #000000;
 }
 
-text {
-  font-size: 50px;
+polygon {
+  fill: none;
+  stroke: gold;
+  stroke-width: 5px;
+}
+
+.bottom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 
 .grid {
-  background-size: 120px 120px;
-  background-image:
-    linear-gradient(to right, #ffffff 1px, transparent 1px),
-    linear-gradient(to bottom, #ffffff 1px, transparent 1px);
-  z-index: 3;
+  background-size: 10px 10px;
   overflow: hidden;
+  overflow: hidden;
+  background-image:
+  linear-gradient(to right, #000000 1px, transparent 1px),
+  linear-gradient(to bottom, #000000 1px, transparent 1px);
+  opacity: 0.3;
 }
 
 .grid > div {
@@ -46,7 +40,7 @@ text {
   justify-content: center;
   height: 100%;
   width: 100%;
-  color: #ffffff;
+  color: #000000;
 }
 
 .grid h2 {
@@ -54,4 +48,8 @@ text {
   display: flex;
   justify-content: center;
   font-size: 6rem;
+}
+
+button {
+  z-index: 4;
 }
