@@ -3,10 +3,18 @@ button {
   z-index: 3;
 }
 
-circle {
- fill: #ffffff;
+.tan-curve {
+  stroke-width: 8;
+  fill: transparent;
+  stroke: cyan;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 20;
 }
 
+main {
+  overflow: hidden;
+}
 .axis-label {
   stroke: #000000;
 }
@@ -16,6 +24,32 @@ polygon {
   stroke: gold;
   stroke-width: 5px;
 }
+
+text {
+  fill: #ffffff;
+}
+
+.unit-circle {
+  fill-opacity: 0;
+  stroke: #9BC3AF;
+  stroke-width: 10;
+}
+
+.line {
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.hypotenuse {
+  stroke-dasharray: 4 1;
+  stroke: #9BC3AF;
+}
+
+.opposite {
+  stroke-dasharray: 3px;
+  stroke: cyan;
+}
+
 
 .bottom {
   position: absolute;
@@ -27,13 +61,47 @@ polygon {
   z-index: -3;
 }
 
+.tan {
+  stroke-dasharray: 16;
+  stroke: #7F00FF;
+}
+
+.tan2 {
+  stroke-dasharray: 16;
+  stroke: #ffffff;
+}
+
+.tan3 {
+  stroke-dasharray: 16;
+  stroke: lime;
+}
+
+.pause-container {
+  position: absolute;
+  left: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.dot {
+  fill: #ffffff;
+}
+
+.pause-container button:hover {
+  cursor: pointer;
+}
+
 .grid {
+  top: 0;
+  left: 0;
   background-size: 10px 10px;
-  overflow: hidden;
-  overflow: hidden;
+  right: 0;
+  bottom: 0;
   background-image:
-  linear-gradient(to right, #ffffff 1px, transparent 1px),
-  linear-gradient(to bottom, #ffffff 1px, transparent 1px);
+    linear-gradient(to right, #ffffff 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff 1px, transparent 1px);
+  z-index: 3;
+  overflow: hidden;
   opacity: 0.3;
 }
 
@@ -45,7 +113,7 @@ polygon {
   justify-content: center;
   height: 100%;
   width: 100%;
-  color: #000000;
+  color: #ffffff;
 }
 
 .grid h2 {
