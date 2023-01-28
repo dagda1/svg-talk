@@ -79,9 +79,6 @@ export const reducer: Reducer<State, Actions> = produce((state: State, action: A
         r: state.circleDot.r,
       };
 
-      const tanX = xScale(0) as number;
-      const tanY = (yScale(-1) as number) * -Math.sin(newTime);
-
       state.hypotenuse = {
         from: {
           x: 0,
