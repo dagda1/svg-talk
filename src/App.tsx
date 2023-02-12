@@ -8,13 +8,13 @@ export function App(): JSX.Element {
   const [showViewport, setViewport] = useToggle();
   const [showSvgViewport, setSvgViewport] = useToggle();
   const [showViewbox, setViewbox] = useToggle();
-  
 
   return (
     <>
       <ApplicationLayout
         center
         theme="cuttingTheme"
+        layout="FULL"
         header={
           <>
             <Button type="button" buttonStyle="primary" onClick={setViewport}>

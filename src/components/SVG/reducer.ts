@@ -7,7 +7,6 @@ import LogRocket from 'logrocket';
 export const maxTan = 3;
 
 export const initialState = {
-  mode: 'ACTIVE' as Mode,
   time: 0,
   unitCircle: { cx: 2, cy: 5, r: 2 },
   circleDot: { cx: 0, cy: 0, r: 5 },
@@ -109,17 +108,6 @@ export const reducer: Reducer<State, Actions> = produce((state: State, action: A
         to: {
           x: -dx,
           y: -dy,
-        },
-      };
-
-      state.tan3 = {
-        from: {
-          x: state.hypotenuse.to.x,
-          y: state.hypotenuse.to.y,
-        },
-        to: {
-          x: state.tan.to.x,
-          y: state.tan.to.y,
         },
       };
 

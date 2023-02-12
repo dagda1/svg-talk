@@ -11,7 +11,7 @@ import { SVGMathJax } from '@cutting/use-mathjax';
 import { breakpoints } from '@cutting/component-library';
 import { scaleLinear, scalePoint } from '@visx/scale';
 import { initialState, maxTan, reducer } from './reducer';
-import { Group } from '@cutting/svg';
+import { Group, ResponsiveSVG } from '@cutting/svg';
 import cs from 'classnames';
 
 const Ticks = [...range(-1, 1)];
@@ -125,64 +125,67 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
   const viewBoxHeight = height;
 
   return (
-    <div ref={containerRef} className="container">
-      <svg width={width} height={height} style={{ overflow: 'visible' }}>
-        <Group>
-          <Group transform={`translate(${yAxisX}, 0)`}>
-            <LinePath<number>
-              defined={(d) => Math.tan(d) < maxTan && Math.tan(d) > -maxTan}
-              className="tan-curve"
-              x={(d) => tanXScale(state.time - d)}
-              y={(d) => tanYScale(Math.tan(d))}
-              curve={curveMonotoneX}
-              data={state.tanData}
-            />
-          </Group>
-          <Group transform={`translate(0, ${yScale(0)})`}>
-            <AxisBottom
-              scale={mainXscale}
-              stroke="#ffffff"
-              tickStroke="#ffffff"
-              tickComponent={(props) => (
-                <Group className="hide-ticks" transform={`translate(${props.x - 5}, ${props.y - 5})`}>
-                  <SVGMathJax>{props.formattedValue}</SVGMathJax>
-                </Group>
-              )}
-            />
-          </Group>
-          <Group transform={`translate(${width - unitCircleWidth}, 0)`}>
-            <circle className="unit-circle" {...state.unitCircle} />
-            <Group transform={`translate(${state.unitCircle.cx}, ${state.unitCircle.cy})`}>
-              <Arc
-                innerRadius={0}
-                outerRadius={30}
-                startAngle={Math.PI / 2}
-                endAngle={state.angle}
-                fill="#E6F0E6"
-                stroke="#8FBB8F"
-                strokeWidth={2}
+    <>
+      <section className="container" ref={containerRef}>
+        <ResponsiveSVG width={width} height={height}>
+          <Group>
+            <Group transform={`translate(${yAxisX}, 0)`}>
+              <LinePath<number>
+                defined={(d) => Math.tan(d) < maxTan && Math.tan(d) > -maxTan}
+                className="tan-curve"
+                x={(d) => tanXScale(state.time - d)}
+                y={(d) => tanYScale(Math.tan(d))}
+                curve={curveMonotoneX}
+                data={state.tanData}
               />
-              <Text dx={40} dy={-20}>
-                {state.angleText}
-              </Text>
             </Group>
             <Group transform={`translate(0, ${yScale(0)})`}>
-              <AxisBottom scale={xScale} tickValues={[]} stroke="#ffffff" tickStroke="#ffffff" />
+              <AxisBottom
+                scale={mainXscale}
+                stroke="#ffffff"
+                tickStroke="#ffffff"
+                tickComponent={(props) => (
+                  <Group className="hide-ticks" transform={`translate(${props.x - 5}, ${props.y - 5})`}>
+                    <SVGMathJax>{props.formattedValue}</SVGMathJax>
+                  </Group>
+                )}
+              />
             </Group>
-            <AxisLeft scale={yScale} stroke="#ffffff" tickValues={[]} />
-            <Group transform={`translate(${state.unitCircle.cx}, ${state.unitCircle.cy})`}>
-              <Line className={cs('line', 'hypotenuse')} {...state.hypotenuse} />
-              <Line className={cs('line', 'opposite')} {...state.opposite} />
-              <Line className={cs('line', 'rear-hypotenuse')} {...state.rearHypotenuse} />
-              <Line className={cs('line', 'tan3')} {...state.tan3} />
-              <circle className={'dot'} {...state.circleDot} fill="#000000" />
-              <circle className={'dot'} {...state.tanDot} fill="#000000" />
-              <Group transform={`translate(${state.rearHypotenuse.to.x}, ${state.rearHypotenuse.to.y - 10})`}>
-                <Text>P</Text>
+            <Group transform={`translate(${width - unitCircleWidth}, 0)`}>
+              <circle className="unit-circle" {...state.unitCircle} />
+              <Group transform={`translate(${state.unitCircle.cx}, ${state.unitCircle.cy})`}>
+                <Arc
+                  innerRadius={0}
+                  outerRadius={30}
+                  startAngle={Math.PI / 2}
+                  endAngle={state.angle}
+                  fill="#E6F0E6"
+                  stroke="#8FBB8F"
+                  strokeWidth={2}
+                />
+                <Text dx={40} dy={-20}>
+                  {state.angleText}
+                </Text>
+              </Group>
+              <Group transform={`translate(0, ${yScale(0)})`}>
+                <AxisBottom scale={xScale} tickValues={[]} stroke="#ffffff" tickStroke="#ffffff" />
+              </Group>
+              <AxisLeft scale={yScale} stroke="#ffffff" tickValues={[]} />
+              <Group transform={`translate(${state.unitCircle.cx}, ${state.unitCircle.cy})`}>
+                <Line className={cs('line', 'hypotenuse')} {...state.hypotenuse} />
+                <Line className={cs('line', 'opposite')} {...state.opposite} />
+                <Line className={cs('line', 'rear-hypotenuse')} {...state.rearHypotenuse} />
+                <Line className={cs('line', 'tan3')} {...state.tan3} />
+                <circle className={'dot'} {...state.circleDot} fill="#000000" />
+                <circle className={'dot'} {...state.tanDot} fill="#000000" />
+                <Group transform={`translate(${state.rearHypotenuse.to.x}, ${state.rearHypotenuse.to.y - 10})`}>
+                  <Text>P</Text>
+                </Group>
               </Group>
             </Group>
           </Group>
-        </Group>
+        </ResponsiveSVG>
+        <SVGMathJax>{`$f(x) = tan(x) $`}</SVGMathJax>
         <Grids
           width={width}
           height={height}
@@ -191,7 +194,7 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
           viewBoxWidth={viewBoxWidth}
           viewBoxHeight={viewBoxHeight}
         />
-      </svg>
-    </div>
+      </section>
+    </>
   );
 }
