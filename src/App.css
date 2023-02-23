@@ -3,6 +3,10 @@ button {
   z-index: 3;
 }
 
+circle {
+ fill: #ffffff;
+}
+
 .axis-label {
   stroke: #000000;
 }
@@ -20,6 +24,7 @@ polygon {
   right: 0;
   bottom: 0;
   overflow: hidden;
+  z-index: -3;
 }
 
 .grid {
@@ -27,8 +32,8 @@ polygon {
   overflow: hidden;
   overflow: hidden;
   background-image:
-  linear-gradient(to right, #000000 1px, transparent 1px),
-  linear-gradient(to bottom, #000000 1px, transparent 1px);
+  linear-gradient(to right, #ffffff 1px, transparent 1px),
+  linear-gradient(to bottom, #ffffff 1px, transparent 1px);
   opacity: 0.3;
 }
 
@@ -52,4 +57,16 @@ polygon {
 
 button {
   z-index: 4;
+}
+
+.container {
+  /* background: grey; */
+  color: #ffffff;
+  resize: both;
+  width: 100%;
+  height: 100%;
+}
+
+.axis-label {
+  stroke: #ffffff;
 }

@@ -13,15 +13,14 @@ interface ViewPortGridProps {
 const domain = 10;
 
 export function ViewPortGrid({ width, height, color, show = false }: ViewPortGridProps): JSX.Element | null {
-  console.log(width, height, Math.min(width, height));
   const xScale = scalePoint({
     domain: [...range(10)],
-    range: [0, Math.min(width, height)],
+    range: [width, 0],
   });
 
   const yScale = scalePoint({
-    domain: [...range(10)].reverse(),
-    range: [Math.min(width, height), 0],
+    domain: [...range(10)],
+    range: [0, height],
   });
 
   return show ? (

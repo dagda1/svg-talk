@@ -1,7 +1,6 @@
 body {
-  background-color: #ffffff;
+  background-color: #000000;
 }
-
 main {
   padding: 0 !important;
 }
@@ -14,6 +13,7 @@ header {
   margin-bottom: 1rem;
 }
 
-header button {
-  margin-right: 2rem !important;
+header button:not(:last-of-type) {
+  margin-right: .5rem !important;
+  margin-bottom: 0.25rem;
 }
