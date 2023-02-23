@@ -60,7 +60,7 @@ button {
 }
 
 .container {
-  /* background: grey; */
+  background: grey;
   color: #ffffff;
   resize: both;
   width: 100%;
