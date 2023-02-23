@@ -16,6 +16,7 @@ header button:not(:last-of-type) {
   margin-right: .5rem !important;
   margin-bottom: 0.25rem;
 }
+
 svg {
   margin-top: 1rem;
 }
