@@ -100,17 +100,6 @@ export const reducer: Reducer<State, Actions> = produce((state: State, action: A
         },
       };
 
-      state.tan2 = {
-        from: {
-          x: 0,
-          y: 0,
-        },
-        to: {
-          x: -dx,
-          y: -dy,
-        },
-      };
-
       state.tanDot = {
         cx: state.tan.to.x,
         cy: state.tan.to.y,
