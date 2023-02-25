@@ -4,9 +4,9 @@ specifiers:
   '@cutting/component-library': ^5.37.0
   '@cutting/devtools': ^4.62.0
   '@cutting/eslint-config': ^4.43.1
-  '@cutting/svg': ^4.53.0
+  '@cutting/svg': ^4.53.1
   '@cutting/tsconfig': ^4.39.0
-  '@cutting/use-get-parent-size': ^1.26.1
+  '@cutting/use-get-parent-size': ^1.26.2
   '@cutting/use-mathjax': ^4.49.1
   '@cutting/useful-types': ^4.39.0
   '@cutting/util': ^4.57.1
@@ -38,8 +38,8 @@ specifiers:
 
 dependencies:
   '@cutting/component-library': 5.37.0_euxn6cjzgihwzvy5w6eslnty7y
-  '@cutting/svg': 4.53.0_zula6vjvt3wdocc4mwcxqa6nzi
-  '@cutting/use-get-parent-size': 1.26.1_biqbaboplfbrettd7655fr4n2y
+  '@cutting/svg': 4.53.1_zula6vjvt3wdocc4mwcxqa6nzi
+  '@cutting/use-get-parent-size': 1.26.2_biqbaboplfbrettd7655fr4n2y
   '@cutting/use-mathjax': 4.49.1_biqbaboplfbrettd7655fr4n2y
   '@cutting/util': 4.57.1
   '@visx/axis': 3.0.1_react@18.2.0
@@ -459,14 +459,14 @@ packages:
       rollup: 2.79.1
     dev: true
 
-  /@cutting/svg/4.53.0_zula6vjvt3wdocc4mwcxqa6nzi:
-    resolution: {integrity: sha512-vWS5W1GFmA2jf/ultEYUXM4RtBRqHcsrXTaqakIJJtrfIV+zz+k9deuQarIGg7HkKQcFKs/SrB7lh3b+nL02og==}
+  /@cutting/svg/4.53.1_zula6vjvt3wdocc4mwcxqa6nzi:
+    resolution: {integrity: sha512-LOYJiJE07EBFFnb8NMuKX6eAl026hflGciBiQRQ+0LED+gqMS7qpbWzBIV0qEQ6bBEncmF5nAGwtp0gzvx3apQ==}
     peerDependencies:
       react: '>= 18.x.x'
       react-dom: '>= 18.x.x'
     dependencies:
       '@cutting/react-abortable-fetch': 0.35.1_zula6vjvt3wdocc4mwcxqa6nzi
-      '@cutting/use-get-parent-size': 1.26.1_biqbaboplfbrettd7655fr4n2y
+      '@cutting/use-get-parent-size': 1.26.2_biqbaboplfbrettd7655fr4n2y
       '@cutting/util': 4.57.1
       classnames: 2.3.2
       react: 18.2.0
@@ -482,8 +482,8 @@ packages:
     resolution: {integrity: sha512-fYR4dusqc+El9PrpFJkgJOACxEbsvC7kXrgeRz9gvo5lMLkiO+S/107SLCy3Fg+1Esgkc+au8FB5RFB4SvhLcQ==}
     dev: true
 
-  /@cutting/use-get-parent-size/1.26.1_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-k109zORV9w4xWzFpD5MSVyjHc8aNNmLZRkcD+s3LlYbVh14yUMPpimhrG4NokJgjQLbypDjETYuC5IrIIltvWQ==}
+  /@cutting/use-get-parent-size/1.26.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-fJGsb+9Ovmi3No0MclhjE13NTfond/qsQvGOW84UUSMT2a7mF39mvXjkEQAEIQxcjiKaJdoySu0qcZcQWisEbw==}
     peerDependencies:
       react: '>= 18.x.x'
       react-dom: '>= 18.x.x'

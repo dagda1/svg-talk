@@ -27,7 +27,7 @@ export function ViewPortGrid({ width, height, color, show = false }: ViewPortGri
     <>
       <GridRows scale={yScale} width={width} stroke={color} />
       <GridColumns scale={xScale} height={height} stroke={color} />
-      <AxisTop scale={xScale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
+      <AxisTop scale={xScale} numTicks={domain} tickFormat={(d) => `${10 - d}`} axisClassName="axis-label" />
       <AxisLeft scale={yScale} numTicks={domain} tickFormat={(d) => `${d}`} axisClassName="axis-label" />
     </>
   ) : null;

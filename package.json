@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@cutting/component-library": "^5.37.0",
-    "@cutting/svg": "^4.53.0",
-    "@cutting/use-get-parent-size": "^1.26.1",
+    "@cutting/svg": "^4.53.1",
+    "@cutting/use-get-parent-size": "^1.26.2",
     "@cutting/use-mathjax": "^4.49.1",
     "@cutting/util": "^4.57.1",
     "@visx/axis": "^3.0.1",
