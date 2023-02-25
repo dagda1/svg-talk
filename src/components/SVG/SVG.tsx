@@ -4,6 +4,7 @@ import { scalePoint } from '@visx/scale';
 import { useEffect, useRef, useState } from 'react';
 import { Grids } from './Grids';
 import { Polygon, LinePath } from '@visx/shape';
+import { curveMonotoneX } from '@visx/curve';
 
 interface SVGProps {
   showSvgViewport: boolean;
@@ -22,16 +23,16 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
 
   const xScale = scalePoint({
     domain: [...range(10)],
-    range: [0, Math.min(width, height)],
+    range: [0, width],
   });
 
   const yScale = scalePoint({
-    domain: [...range(10)].reverse(),
-    range: [Math.min(width, height), 0],
+    domain: [...range(10)],
+    range: [0, height],
   });
 
   useEffect(() => {
-    tickFrame.current = requestAnimationFrame(() => setCount((prev) => prev + 1));
+    tickFrame.current = requestAnimationFrame(() => setCount((prev) => (prev >= 200 ? 0 : prev + 2)));
     return () => {
       if (!tickFrame.current) {
         return;
@@ -40,29 +41,42 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
     };
   }, [count]);
 
-  console.log(count);
-
   return (
     <div ref={containerRef} className="container">
       <svg style={{ overflow: 'visible' }} width="800" height="600">
-        <Polygon
-          sides={3}
-          rotate={count}
-          size={count < 200 ? count : 200}
-          center={{ x: xScale(5) as number, y: yScale(5) as number }}
-        />
+        <g transform={`translate(${0}, ${0})`}>
+          <Polygon
+            sides={6}
+            rotate={count}
+            size={count < 200 ? count : 200}
+            center={{ x: xScale(5) as number, y: yScale(5) as number }}
+          />
 
-        <LinePath
-          data={[
-            { x: 2, y: 1 },
-            { x: 5, y: 5 },
-            { x: 8, y: 1 },
-          ]}
-          x={(d) => xScale(d.x) as number}
-          y={(d) => yScale(d.y) as number}
-          strokeWidth={2}
-          stroke="#fff"
-        />
+          <LinePath
+            data={[
+              { x: 2, y: 1 },
+              { x: 5, y: 5 },
+              { x: 8, y: 1 },
+            ]}
+            x={(d) => xScale(d.x) as number}
+            y={(d) => yScale(d.y) as number}
+            strokeWidth={2}
+            stroke="#fff"
+          />
+          <LinePath
+            data={[
+              { x: 0, y: 4 },
+              { x: 3, y: 9 },
+              { x: 5, y: 2 },
+              { x: 9, y: 6 },
+            ]}
+            x={(d) => xScale(d.x) as number}
+            y={(d) => yScale(d.y) as number}
+            curve={curveMonotoneX}
+            strokeWidth={2}
+            stroke="#fff"
+          />
+        </g>
         <Grids
           width={width}
           height={height}
