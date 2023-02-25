@@ -22,12 +22,12 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
 
   const xScale = scalePoint({
     domain: [...range(10)],
-    range: [0, Math.min(width, height)],
+    range: [0, width],
   });
 
   const yScale = scalePoint({
-    domain: [...range(10)].reverse(),
-    range: [Math.min(width, height), 0],
+    domain: [...range(10)],
+    range: [0, height],
   });
 
   useEffect(() => {
@@ -39,8 +39,6 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
       cancelAnimationFrame(tickFrame.current);
     };
   }, [count]);
-
-  console.log(count);
 
   return (
     <div ref={containerRef} className="container">
