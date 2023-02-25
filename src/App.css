@@ -70,3 +70,8 @@ button {
 .axis-label {
   stroke: #ffffff;
 }
+
+.axis-label tspan {
+  font-size: 18pt;
+  fill: #ffffff;
+}
