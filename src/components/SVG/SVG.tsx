@@ -3,12 +3,13 @@ import { range } from '@cutting/util';
 import { scalePoint } from '@visx/scale';
 import { useEffect, useRef, useState } from 'react';
 import { Grids } from './Grids';
-import { Polygon, LinePath } from '@visx/shape';
 
 interface SVGProps {
   showSvgViewport: boolean;
   showViewbox: boolean;
 }
+
+const increase = (Math.PI * 2) / 360;
 
 export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,7 +17,6 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
   const [count, setCount] = useState(0);
 
   const tickFrame = useRef<number>();
-
   const viewBoxWidth = width;
   const viewBoxHeight = height;
 
@@ -30,8 +30,13 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
     range: [0, height],
   });
 
+  const radius = yScale(4) as number;
+
+  const dx = (xScale(5) as number) + radius * Math.cos(count);
+  const dy = (yScale(5) as number) + radius * -Math.sin(count);
+
   useEffect(() => {
-    tickFrame.current = requestAnimationFrame(() => setCount((prev) => prev + 1));
+    tickFrame.current = requestAnimationFrame(() => setCount((prev) => prev + increase));
     return () => {
       if (!tickFrame.current) {
         return;
@@ -43,24 +48,8 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
   return (
     <div ref={containerRef} className="container">
       <svg style={{ overflow: 'visible' }} width="800" height="600">
-        <Polygon
-          sides={3}
-          rotate={count}
-          size={count < 200 ? count : 200}
-          center={{ x: xScale(5) as number, y: yScale(5) as number }}
-        />
-
-        <LinePath
-          data={[
-            { x: 2, y: 1 },
-            { x: 5, y: 5 },
-            { x: 8, y: 1 },
-          ]}
-          x={(d) => xScale(d.x) as number}
-          y={(d) => yScale(d.y) as number}
-          strokeWidth={2}
-          stroke="#fff"
-        />
+        <circle cx={xScale(5)} cy={yScale(5)} r={xScale(4)} fillOpacity={0} stroke="cyan" strokeWidth={10} />
+        <circle cx={dx} cy={dy} r={5} fill="#ffffff" />
         <Grids
           width={width}
           height={height}
