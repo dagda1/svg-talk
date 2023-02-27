@@ -10,6 +10,8 @@ header {
   justify-content: space-evenly;
   width: 100%;
   margin-bottom: 1rem;
+  min-width: 0;
+  min-height: 0;
 }
 
 header button:not(:last-of-type) {
@@ -17,6 +19,6 @@ header button:not(:last-of-type) {
   margin-bottom: 0.25rem;
 }
 
-svg {
+/* svg {
   margin-top: 1rem;
-}
+} */

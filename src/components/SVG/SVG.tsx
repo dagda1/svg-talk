@@ -1,57 +1,66 @@
-import { useParentSize } from '@cutting/use-get-parent-size';
-import { scaleLinear } from '@visx/scale';
+import { range } from '@cutting/util';
+import { scalePoint } from '@visx/scale';
 import { useMemo, useRef } from 'react';
 import { Grids } from './Grids';
+import type { ResponsiveSVG } from '@cutting/svg';
+import { useParentSize } from '@cutting/use-get-parent-size';
+
+type Props<C> = C extends (p: infer P) => JSX.Element ? P : never;
 
 interface SVGProps {
   showSvgViewport: boolean;
   showViewbox: boolean;
 }
 
+type PreserveAspectRatio = Props<typeof ResponsiveSVG>['preserveAspectRatio'];
+
 export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const { width, height } = useParentSize(containerRef);
+
+  const { xScale, yScale } = useMemo(() => {
+    const xScale = scalePoint({
+      domain: [...range(10)],
+      range: [0, width],
+    });
+
+    const yScale = scalePoint({
+      domain: [...range(10)],
+      range: [0, height],
+    });
+
+    return { xScale, yScale };
+  }, [width, height]);
+
+  const preserveAspectRatio: PreserveAspectRatio = 'none';
+
+  const radius = xScale(5);
 
   const viewBoxWidth = width;
   const viewBoxHeight = height;
 
-  const { radius } = useMemo(() => {
-    const xScale = scaleLinear({ domain: [0, 20], range: [0, width] });
-    const yScale = scaleLinear({ domain: [0, 20], range: [height, 0] });
-
-    const radius = yScale(12);
-
-    return { radius, xScale, yScale };
-  }, [width, height]);
-
-  console.log(radius);
   return (
-    <div ref={containerRef} className="container">
-      {/* <svg width="500" height="100" viewBox="0 0 500 10" preserveAspectRatio="xMinYMin meet"> */}
-      <div
-        style={{
-          display: 'inline-block',
-          position: 'relative',
-          width: '100%',
-          verticalAlign: 'top',
-          overflow: 'hidden',
-          border: '10px solid red',
-        }}
+    <div className="container" ref={containerRef}>
+      <svg
+        width={width}
+        height={height}
+        ref={svgRef}
+        viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+        preserveAspectRatio={preserveAspectRatio}
       >
-        <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMinYMin meet">
-          <g>
-            <circle r={radius} cx={width / 2} cy={height / 2} fill="#f00" />
-          </g>
-          <Grids
-            width={width}
-            height={height}
-            showSvgViewport={showSvgViewport}
-            showViewbox={showViewbox}
-            viewBoxWidth={viewBoxWidth}
-            viewBoxHeight={viewBoxHeight}
-          />
-        </svg>
-      </div>
+        <g>
+          <circle cx={radius} cy={radius} r={radius} />
+        </g>
+        <Grids
+          width={viewBoxWidth}
+          height={viewBoxHeight}
+          showSvgViewport={showSvgViewport}
+          showViewbox={showViewbox}
+          viewBoxWidth={width}
+          viewBoxHeight={height}
+        />
+      </svg>
     </div>
   );
 }
