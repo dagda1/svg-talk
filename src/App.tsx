@@ -12,7 +12,6 @@ export function App(): JSX.Element {
   return (
     <>
       <ApplicationLayout
-        center
         theme="cuttingTheme"
         header={
           <>
