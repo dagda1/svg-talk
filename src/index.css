@@ -19,6 +19,10 @@ header button:not(:last-of-type) {
   margin-bottom: 0.25rem;
 }
 
-/* svg {
-  margin-top: 1rem;
-} */
+svg {
+  border: 1px solid yellow;
+}
+
+rect {
+  fill: transparent;  
+}

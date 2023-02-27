@@ -18,10 +18,9 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const { width, height } = useParentSize(containerRef);
+  const { width: svgWidth, height: svgHeight } = useParentSize(svgRef);
 
-  const preserveAspectRatio: PreserveAspectRatio = 'xMinYMin meet';
-
-  const { xScale, yScale, radius } = useMemo(() => {
+  const { radius, x, y } = useMemo(() => {
     const xScale = scalePoint({
       domain: [...range(10)],
       range: [0, width],
@@ -32,47 +31,35 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
       range: [0, height],
     });
 
-    const radius = xScale(3);
+    const radius = xScale(8);
 
-    console.log(radius);
+    const x = xScale(5);
+    const y = yScale(5);
 
-    return { radius, xScale, yScale };
+    return { radius, xScale, yScale, x, y };
   }, [width, height]);
 
-  const { adjustedWidth, adjustedHeight } = useMemo(() => {
-    if (!svgRef.current || !containerRef.current) {
-      return { adjustedWidth: width, adjustedHeight: height };
-    }
+  const preserveAspectRatio: PreserveAspectRatio = 'none';
 
-    const { width: svgWidth, height: svgHeight } = svgRef.current.getBoundingClientRect();
+  const viewBoxWidth = width;
+  const viewBoxHeight = height;
 
-    const aspect = 3; //svgWidth / svgHeight;
-
-    console.log({ aspect, svgWidth, svgHeight, width, height });
-
-    return { svgWidth, svgHeight, adjustedWidth: width, adjustedHeight: Math.round(width / aspect) };
-  }, [height, width]);
-
-  console.log({ adjustedWidth, adjustedHeight, width, height });
+  console.log({ width, height, svgWidth, svgHeight });
 
   return (
     <div className="container" ref={containerRef}>
-      <svg
-        ref={svgRef}
-        viewBox={`${0} ${0} ${adjustedWidth} ${adjustedHeight}`}
-        preserveAspectRatio={preserveAspectRatio}
-        style={{ overflow: 'visible' }}
-      >
+      <svg ref={svgRef} viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio={preserveAspectRatio}>
         <g>
-          <circle cx={xScale(5)} cy={yScale(5)} r={radius} fill="#ffffff" />
+          <circle r={radius} cx={x} cy={y} />
+          <rect x={0} y={0} width={radius} height={radius} stroke="blue" strokeWidth="8" />
         </g>
         <Grids
           width={width}
           height={height}
           showSvgViewport={showSvgViewport}
           showViewbox={showViewbox}
-          viewBoxWidth={adjustedWidth}
-          viewBoxHeight={adjustedHeight}
+          viewBoxWidth={viewBoxWidth}
+          viewBoxHeight={viewBoxHeight}
         />
       </svg>
     </div>
