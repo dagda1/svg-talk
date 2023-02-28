@@ -43,7 +43,7 @@ const increase = TWO_PI / 360;
 
 export const reducer: Reducer<State, Actions> = produce((state: State, action: Actions) => {
   return match(action)
-    .with({ type: 'TICK' }, ({ payload: { xScale, yScale, tanXScale, unitCircleWidth } }) => {
+    .with({ type: 'TICK' }, ({ payload: { xScale, yScale, tanXScale } }) => {
       const minimum = tanXScale.domain()[0];
       const maximum = tanXScale.domain()[1];
 

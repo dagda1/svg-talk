@@ -50,19 +50,21 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
 
   const tickFrame = useRef<number>();
 
-  const unitCircleWidth: number = useMemo(() => {
-    if (width >= breakpoints.desktop) {
-      return height / 1.25;
-    }
+  const { xScale, yScale, mainXscale, tanXScale, tanYScale, unitCircleWidth, initialY } = useMemo(() => {
+    const wholeXScale = scaleLinear({
+      domain: [0, 10],
+      range: [0, width],
+    });
 
-    if (width >= breakpoints.tablet) {
-      return height / 2;
-    }
+    const unitCircleWidth = wholeXScale(3);
 
-    return height / 4.5;
-  }, [height, width]);
+    const wholeYScale = scaleLinear({
+      domain: [0, 10],
+      range: [height, 0],
+    });
 
-  const { xScale, yScale, mainXscale, tanXScale, tanYScale } = useMemo(() => {
+    const initialY = wholeYScale(9);
+
     const xScale = scalePoint({
       domain: Ticks,
       range: [0, unitCircleWidth],
@@ -88,8 +90,8 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
       range: [unitCircleWidth, 0],
     });
 
-    return { xScale, yScale, mainXscale, tanXScale, tanYScale };
-  }, [unitCircleWidth, width]);
+    return { xScale, yScale, mainXscale, tanXScale, tanYScale, unitCircleWidth, initialY };
+  }, [width, height]);
 
   useLayoutEffect(() => {
     tickFrame.current = requestAnimationFrame(() =>
@@ -128,7 +130,7 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
     <>
       <section className="container" ref={containerRef}>
         <ResponsiveSVG width={width} height={height}>
-          <Group>
+          <Group transform={`translate(0, ${initialY})`}>
             <Group transform={`translate(${yAxisX}, 0)`}>
               <LinePath<number>
                 defined={(d) => Math.tan(d) < maxTan && Math.tan(d) > -maxTan}
