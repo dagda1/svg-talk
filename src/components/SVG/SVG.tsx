@@ -1,10 +1,10 @@
 import { useParentSize } from '@cutting/use-get-parent-size';
-import { range } from '@cutting/util';
 import { scalePoint } from '@visx/scale';
 import { useEffect, useRef, useState } from 'react';
 import { Grids } from './Grids';
 import { Polygon, LinePath } from '@visx/shape';
-import { curveMonotoneX } from '@visx/curve';
+import { AxisBottom, AxisLeft } from '@visx/axis';
+import { curveNatural } from '@visx/curve';
 
 interface SVGProps {
   showSvgViewport: boolean;
@@ -22,12 +22,12 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
   const viewBoxHeight = height;
 
   const xScale = scalePoint({
-    domain: [...range(10)],
+    domain: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     range: [0, width],
   });
 
   const yScale = scalePoint({
-    domain: [...range(10)],
+    domain: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     range: [0, height],
   });
 
@@ -51,6 +51,19 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
             size={count < 200 ? count : 200}
             center={{ x: xScale(5) as number, y: yScale(5) as number }}
           />
+          <rect x={xScale(6)} y={yScale(5)} width={xScale(1)} height={yScale(1)} fill="blue" stroke="blue" />
+
+          <g transform={`translate(0, ${yScale(5)})`}>
+            <AxisBottom
+              scale={xScale}
+              stroke="#ffffff"
+              tickStroke="#ffffff"
+              tickFormat={(x) => String(Number(x) - 5)}
+            />
+          </g>
+          <g transform={`translate(${xScale(5)}, 0)`}>
+            <AxisLeft scale={yScale} stroke="#ffffff" tickFormat={(x) => String(-(Number(x) - 5))} />
+          </g>
 
           <LinePath
             data={[
@@ -72,9 +85,9 @@ export function SVG({ showSvgViewport, showViewbox }: SVGProps): JSX.Element {
             ]}
             x={(d) => xScale(d.x) as number}
             y={(d) => yScale(d.y) as number}
-            curve={curveMonotoneX}
+            curve={curveNatural}
             strokeWidth={2}
-            stroke="#fff"
+            stroke="#f00"
           />
         </g>
         <Grids
